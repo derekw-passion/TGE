@@ -1,0 +1,6 @@
+- get SFML running
+- write text to screen in game loop
+- implement input
+- implement game features like input options that have bells and whistles
+- implement colored text
+- implement animated text
