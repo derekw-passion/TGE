@@ -13,16 +13,13 @@ GLOBALFLAGS := -std=$(CPPVERSION) -Wall -Wextra -g -fPIC
 CXXFLAGS := $(GLOBALFLAGS) -shared -o $(OUT_DIR)/$(TARGET_NAME).dll -Wl,--out-implib,$(OUT_DIR)/$(TARGET_NAME).lib
 TESTFLAGS := $(GLOBALFLAGS) -o $(OUT_DIR)/test.exe
 
-SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp)) Lib/glad/glad.cpp
+SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 OBJECTS := $(addprefix $(OBJ_DIR)/,$(subst /,_,$(SRCS:.cpp=.o)))
 
 $(OBJ_DIR)/Engine_%.o: Engine/%.cpp
 	$(CXX) $(GLOBALFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/Lib_%.o: Lib/%.cpp
-	$(CXX) $(GLOBALFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/Lib_glad_glad.o: Lib/glad/glad.cpp
 	$(CXX) $(GLOBALFLAGS) -c $< -o $@
 
 directories:
