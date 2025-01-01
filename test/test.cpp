@@ -1,12 +1,10 @@
-#include "Engine/TextGameEngine.h"
-#include "Lib/Logger.h"
+#include "TestGameEngine.h"
+#include "../Lib/Logger.h"
 
 int main(int argc, char* argv[])
 {
-    TextGameEngine engine;
-    if(engine.Start(
-        sf::VideoMode({800, 600}), 
-        "Test") == 0)
+    TestGameEngine engine;
+    if(engine.Start() == 0)
     {
         Logger::Log(LogLevel::INFO, "Exiting...");
         return 0;

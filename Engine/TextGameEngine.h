@@ -7,20 +7,36 @@
 
 using namespace std;
 
+struct ENGINE_API EngineSettings
+{
+    string title = "Game";
+    sf::VideoMode videoMode = sf::VideoMode({800, 600});
+    unsigned int frameRateLimit = 60;
+    sf::Color clearColor = sf::Color::Black;
+};
+
 class ENGINE_API TextGameEngine
 {
 private:
-    void Render();
-    void HandleInput();
-    void GameLoop();
-
-private:
     sf::RenderWindow window;
     sf::Font font;
+
+private:
+    void GameLoop();
+
+protected:
+    void RenderBegin();
+    void RenderEnd();
+    
+    virtual void Render();
+    virtual void HandleInput(sf::Event event) = 0;
+
+protected:
+    EngineSettings settings;
 
 public:  
     TextGameEngine();
     ~TextGameEngine();
 
-    int Start(sf::VideoMode videoMode, string title);
+    int Start();
 };

@@ -37,7 +37,7 @@ all: directories $(OBJECTS)
 
 	@echo "Build successful!"
 
-test: test.cpp $(TEST_LIBS)
+test: $(wildcard test/*.cpp) $(TEST_LIBS)
 	$(CXX) $(TESTFLAGS) $^ $(LDLIBS)
 
 clean:

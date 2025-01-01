@@ -6,7 +6,7 @@ TextGameEngine::~TextGameEngine() {}
 
 void TextGameEngine::Render()
 {
-    window.clear(sf::Color::Black);
+    RenderBegin();
 
     sf::Text text;
     text.setFont(font);
@@ -15,36 +15,44 @@ void TextGameEngine::Render()
     text.setFillColor(sf::Color::White);
     window.draw(text);
 
-    window.display();
-}
-
-void TextGameEngine::HandleInput()
-{
-    sf::Event event;
-    while(window.pollEvent(event))
-    {
-        if(event.type == sf::Event::Closed)
-        {
-            window.close();
-        }
-    }
+    RenderEnd();
 }
 
 void TextGameEngine::GameLoop()
 {
     while(window.isOpen())
     {
-        HandleInput();
+        sf::Event event;
+        while(window.pollEvent(event))
+        {
+            if(event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
+
+            HandleInput(event);
+        }
+
         Render();
     }
 }
 
-int TextGameEngine::Start(sf::VideoMode videoMode, string title)
+void TextGameEngine::RenderBegin()
+{
+    window.clear(settings.clearColor);
+}
+
+void TextGameEngine::RenderEnd()
+{
+    window.display();
+}
+
+int TextGameEngine::Start()
 {
     Logger::Log(LogLevel::INFO, "Building window");
     
-    window.create(videoMode, title);
-    window.setFramerateLimit(60);
+    window.create(settings.videoMode, settings.title);
+    window.setFramerateLimit(settings.frameRateLimit);
 
     Logger::Log(LogLevel::INFO, "Loading fonts");
     if(!font.loadFromFile("resources/fonts/arial.ttf"))
