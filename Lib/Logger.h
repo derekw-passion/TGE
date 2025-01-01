@@ -49,5 +49,5 @@ private:
     static void Print(const char* message);
 public:
     static void Init(LoggerSettings settings);
-    static void Log(LogLevel level, const char* format, ...);
+    static void Log(LogLevel level, string format, ...);
 };

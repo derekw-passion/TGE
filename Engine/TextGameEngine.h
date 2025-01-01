@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Lib/defs.h"
+#include "FontManager.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -18,8 +19,7 @@ struct ENGINE_API EngineSettings
 class ENGINE_API TextGameEngine
 {
 private:
-    sf::RenderWindow window;
-    sf::Font font;
+    sf::RenderWindow m_Window;
 
 private:
     void GameLoop();
@@ -27,8 +27,10 @@ private:
 protected:
     void RenderBegin();
     void RenderEnd();
+    sf::RenderWindow& GetWindow() { return m_Window; }
     
-    virtual void Render();
+    virtual int Init() = 0;
+    virtual void Render() = 0;
     virtual void HandleInput(sf::Event event) = 0;
 
 protected:

@@ -26,7 +26,7 @@ void Logger::Init(LoggerSettings settings)
     m_Settings = settings;
 }
 
-void Logger::Log(LogLevel level, const char* format, ...)
+void Logger::Log(LogLevel level, string format, ...)
 {
     va_list args;
     va_start(args, format);
@@ -46,7 +46,7 @@ void Logger::Log(LogLevel level, const char* format, ...)
     }
 
     char buffer[1024];
-    vsprintf_s(buffer, format, args);
+    vsprintf_s(buffer, format.c_str(), args);
     fullMessage += buffer;
 
     switch(level)

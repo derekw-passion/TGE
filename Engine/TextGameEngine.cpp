@@ -2,32 +2,21 @@
 #include "../Lib/Logger.h"
 
 TextGameEngine::TextGameEngine() {}
-TextGameEngine::~TextGameEngine() {}
-
-void TextGameEngine::Render()
+TextGameEngine::~TextGameEngine()
 {
-    RenderBegin();
-
-    sf::Text text;
-    text.setFont(font);
-    text.setString("Hello, world!");
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::White);
-    window.draw(text);
-
-    RenderEnd();
+    FontManager::UnloadFonts();
 }
 
 void TextGameEngine::GameLoop()
 {
-    while(window.isOpen())
+    while(m_Window.isOpen())
     {
         sf::Event event;
-        while(window.pollEvent(event))
+        while(m_Window.pollEvent(event))
         {
             if(event.type == sf::Event::Closed)
             {
-                window.close();
+                m_Window.close();
             }
 
             HandleInput(event);
@@ -39,26 +28,30 @@ void TextGameEngine::GameLoop()
 
 void TextGameEngine::RenderBegin()
 {
-    window.clear(settings.clearColor);
+    m_Window.clear(settings.clearColor);
 }
 
 void TextGameEngine::RenderEnd()
 {
-    window.display();
+    m_Window.display();
 }
 
 int TextGameEngine::Start()
 {
     Logger::Log(LogLevel::INFO, "Building window");
     
-    window.create(settings.videoMode, settings.title);
-    window.setFramerateLimit(settings.frameRateLimit);
+    m_Window.create(settings.videoMode, settings.title);
+    m_Window.setFramerateLimit(settings.frameRateLimit);
 
-    Logger::Log(LogLevel::INFO, "Loading fonts");
-    if(!font.loadFromFile("resources/fonts/arial.ttf"))
+    Logger::Log(LogLevel::INFO, "Initializing engine");
+    if(Init() != 0)
     {
-        Logger::Log(LogLevel::ERROR, "Failed to load fonts.");
+        Logger::Log(LogLevel::ERROR, "Failed to initialize engine");
         return -1;
+    }
+    else
+    {
+        Logger::Log(LogLevel::INFO, "Engine initialized");
     }
 
     Logger::Log(LogLevel::INFO, "Entering game loop");

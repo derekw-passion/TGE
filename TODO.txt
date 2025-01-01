@@ -1,4 +1,3 @@
-- implement font manager
 - implement colored text
 - implement animated text
 - implement input
