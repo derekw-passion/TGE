@@ -1,6 +1,9 @@
 #include "TestGameEngine.h"
 
-TestGameEngine::TestGameEngine() = default;
+TestGameEngine::TestGameEngine()
+{
+    settings.title = "Test";
+}
 TestGameEngine::~TestGameEngine() = default;
 
 void TestGameEngine::HandleInput(sf::Event event) {}
