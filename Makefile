@@ -6,7 +6,7 @@ OBJ_DIR := obj
 OUT_DIR := bin
 SRC_DIRS := Engine Lib
 
-LDLIBS := -lsfml-window -lsfml-system
+LDLIBS := -lopengl32 -lgdi32 -lsfml-window -lsfml-system -lsfml-graphics
 TEST_LIBS := $(OUT_DIR)/$(TARGET_NAME).lib
 
 GLOBALFLAGS := -std=$(CPPVERSION) -Wall -g -fPIC

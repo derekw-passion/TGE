@@ -2,6 +2,7 @@
 
 #include "../Lib/defs.h"
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 
 using namespace std;
@@ -14,7 +15,8 @@ private:
     void GameLoop();
 
 private:
-    sf::Window window;
+    sf::RenderWindow window;
+    sf::Font font;
 
 public:  
     TextGameEngine();
