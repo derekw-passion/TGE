@@ -24,5 +24,7 @@ void TestGameEngine::Render()
     text.setPosition(0, 0);
     GetWindow().draw(text);
 
+    // TODO: Add input options here
+
     RenderEnd();
 }

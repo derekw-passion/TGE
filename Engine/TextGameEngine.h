@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Lib/defs.h"
-#include "FontManager.h"
+#include "Text/FontManager.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
