@@ -6,10 +6,10 @@ OBJ_DIR := obj
 OUT_DIR := bin
 SRC_DIRS := Engine Lib
 
-LDLIBS := -lglfw3 -lgdi32 -lopengl32
+LDLIBS := -lsfml-window -lsfml-system
 TEST_LIBS := $(OUT_DIR)/$(TARGET_NAME).lib
 
-GLOBALFLAGS := -std=$(CPPVERSION) -Wall -Wextra -g -fPIC
+GLOBALFLAGS := -std=$(CPPVERSION) -Wall -g -fPIC
 CXXFLAGS := $(GLOBALFLAGS) -shared -o $(OUT_DIR)/$(TARGET_NAME).dll -Wl,--out-implib,$(OUT_DIR)/$(TARGET_NAME).lib
 TESTFLAGS := $(GLOBALFLAGS) -o $(OUT_DIR)/test.exe
 
@@ -25,20 +25,20 @@ $(OBJ_DIR)/Lib_%.o: Lib/%.cpp
 directories:
 	@if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
 	@if not exist $(OUT_DIR) mkdir $(OUT_DIR)
-	@echo "Directories created!"
 
 all: directories $(OBJECTS)
 	@echo "Building $(TARGET_NAME).dll..."
 	$(CXX) $(CXXFLAGS) $(OBJECTS) $(LDLIBS)
 
+	@echo "Cleaning..."
 	$(MAKE) clean
+	@echo "Building test..."
 	$(MAKE) test
 
 	@echo "Build successful!"
 
 test: test.cpp $(TEST_LIBS)
-	@echo "Building test..."
-	$(CXX) $(TESTFLAGS) $(TEST_LIBS) $^
+	$(CXX) $(TESTFLAGS) $^ $(LDLIBS)
 
 clean:
 	@if exist $(OBJ_DIR) rmdir /s /q $(OBJ_DIR)

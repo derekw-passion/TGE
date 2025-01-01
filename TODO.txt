@@ -1,4 +1,3 @@
-- get SFML running
 - write text to screen in game loop
 - implement input
 - implement colored text

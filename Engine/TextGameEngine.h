@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Lib/defs.h"
+#include <SFML/Window.hpp>
 #include <string>
 
 using namespace std;
@@ -12,9 +13,12 @@ private:
     void HandleInput();
     void GameLoop();
 
+private:
+    sf::Window window;
+
 public:  
     TextGameEngine();
     ~TextGameEngine();
 
-    int Start();
+    int Start(sf::VideoMode videoMode, string title);
 };
