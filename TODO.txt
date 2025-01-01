@@ -1,4 +1,3 @@
-- implement colored text
 - implement animated text
 - implement input
 - implement input options feature
