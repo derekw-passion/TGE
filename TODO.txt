@@ -1,5 +1,9 @@
-- implement input options feature
-- implement UI grid
+- implement UI
+	- UITextElement
+	- UITextBlock
+	- UITextOption
+	- UITextOptions
+	- UICheckbox
 - implement animated text
 - implement ASCII sprites
 - implement LUA
