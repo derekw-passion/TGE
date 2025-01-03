@@ -1,3 +1,4 @@
+- account for padding and margins in UITextElement
 - camelcase all method names
 - implement UI
 	- TextBlock
