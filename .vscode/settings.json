@@ -3,7 +3,8 @@
         "ostream": "cpp",
         "xstring": "cpp",
         "iostream": "cpp",
-        "ctime": "cpp"
+        "ctime": "cpp",
+        "ios": "cpp"
     },
     "C_Cpp.default.compilerPath": "C:\\Program Files\\msys2\\mingw64\\bin\\clang++.exe"
 }

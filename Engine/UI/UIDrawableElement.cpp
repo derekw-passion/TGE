@@ -8,7 +8,6 @@ void UIDrawableElement::Init(sf::RenderWindow *window)
     }
 
     m_pWindow = window;
-    m_Rect = sf::FloatRect(0, 0, 0, 0);
     m_bInitialized = true;
 }
 

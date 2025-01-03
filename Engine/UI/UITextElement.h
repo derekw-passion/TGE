@@ -21,5 +21,5 @@ public:
     
 public:
     inline void SetBackgroundVisible(bool bVisible) { m_bBackgroundVisible = bVisible; }
-    inline void SetBackgroundColor(sf::Color color) { m_Background.setFillColor(color); }
+    inline void SetBackground(sf::RectangleShape background) { m_Background = background; }
 };
