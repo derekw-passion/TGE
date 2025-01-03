@@ -1,5 +1,5 @@
 #include "TextGameEngine.h"
-#include "../Lib/Logger.h"
+#include "Lib/Logger.h"
 
 TextGameEngine::TextGameEngine() {}
 TextGameEngine::~TextGameEngine()
@@ -11,18 +11,28 @@ void TextGameEngine::GameLoop()
 {
     while(m_Window.isOpen())
     {
-        sf::Event event;
-        while(m_Window.pollEvent(event))
+        try
         {
-            if(event.type == sf::Event::Closed)
+            sf::Event event;
+            while(m_Window.pollEvent(event))
             {
-                m_Window.close();
+                if(event.type == sf::Event::Closed)
+                {
+                    m_Window.close();
+                }
+
+                HandleInput(event);
             }
 
-            HandleInput(event);
+            Update();
+            Render();
         }
-
-        Render();
+        catch(const char* e)
+        {
+            Logger::Log(LogLevel::ERROR, e);
+            Logger::Log(LogLevel::ERROR, "Exiting...");
+            exit(-1);
+        }
     }
 }
 

@@ -4,7 +4,7 @@ CXX := g++
 
 OBJ_DIR := obj
 OUT_DIR := bin
-SRC_DIRS := Engine Engine/Text Lib
+SRC_DIRS := Engine Engine/Lib Engine/UI Engine/Util
 
 LDLIBS := -lopengl32 -lgdi32 -lsfml-window -lsfml-system -lsfml-graphics
 TEST_LIBS := $(OUT_DIR)/$(TARGET_NAME).lib
@@ -19,10 +19,13 @@ OBJECTS := $(addprefix $(OBJ_DIR)/,$(subst /,_,$(SRCS:.cpp=.o)))
 $(OBJ_DIR)/Engine_%.o: Engine/%.cpp
 	$(CXX) $(GLOBALFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/Engine_Text_%.o: Engine/Text/%.cpp
+$(OBJ_DIR)/Engine_Lib_%.o: Engine/Lib/%.cpp
 	$(CXX) $(GLOBALFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/Lib_%.o: Lib/%.cpp
+$(OBJ_DIR)/Engine_UI_%.o: Engine/UI/%.cpp
+	$(CXX) $(GLOBALFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/Engine_Util_%.o: Engine/Util/%.cpp
 	$(CXX) $(GLOBALFLAGS) -c $< -o $@
 
 directories:

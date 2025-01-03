@@ -1,9 +1,13 @@
+- camelcase all method names
 - implement UI
-	- UITextElement
-	- UITextBlock
-	- UITextOption
-	- UITextOptions
-	- UICheckbox
+	- TextBlock
+	- Grid
+	- TextOption
+	- TextOptions
+	- Checkbox
+	- Dialog
+- implement input/keybindings/mouse support
+- implement audio
 - implement animated text
 - implement ASCII sprites
 - implement LUA

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Lib/defs.h"
-#include "Text/FontManager.h"
+#include "Lib/defs.h"
+#include "Util/FontManager.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -27,11 +27,13 @@ private:
 protected:
     void RenderBegin();
     void RenderEnd();
-    sf::RenderWindow& GetWindow() { return m_Window; }
+    sf::RenderWindow* GetWindow() { return &m_Window; }
     
+protected:
     virtual int Init() = 0;
-    virtual void Render() = 0;
     virtual void HandleInput(sf::Event event) = 0;
+    virtual void Update() = 0;
+    virtual void Render() = 0;
 
 protected:
     EngineSettings settings;
