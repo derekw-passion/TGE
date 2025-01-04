@@ -28,8 +28,8 @@ struct ENGINE_API UIRect
 
 struct ENGINE_API UIDrawableRect
 {
-    sf::RectangleShape inner;
-    sf::RectangleShape outer;
+    sf::RectangleShape inner = sf::RectangleShape();
+    sf::RectangleShape outer = sf::RectangleShape();
     bool visible = false;
 };
 

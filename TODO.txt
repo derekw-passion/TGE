@@ -1,9 +1,9 @@
-- account for rotation in UITextElement
 - namespace everything
 - implement UI
-	- TextBlock
 	- Grid
-		- implement margins
+		- implement columns
+		- implement rows
+		- implement margins/autopositioning?
 	- TextOption
 	- TextOptions
 	- Checkbox
