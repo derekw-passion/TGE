@@ -1,8 +1,9 @@
-- account for padding and margins in UITextElement
-- camelcase all method names
+- account for rotation in UITextElement
+- namespace everything
 - implement UI
 	- TextBlock
 	- Grid
+		- implement margins
 	- TextOption
 	- TextOptions
 	- Checkbox

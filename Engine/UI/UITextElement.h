@@ -11,6 +11,9 @@ private:
     sf::RectangleShape m_Background;
     bool m_bBackgroundVisible = false;
 
+private:
+    void UpdateBackground();
+
 public:
     UITextElement();
 
@@ -20,6 +23,6 @@ public:
     virtual void Draw();
     
 public:
-    inline void SetBackgroundVisible(bool bVisible) { m_bBackgroundVisible = bVisible; }
+    inline void SetBackgroundVisible(bool visible) { m_bBackgroundVisible = visible; }
     inline void SetBackground(sf::RectangleShape background) { m_Background = background; }
 };

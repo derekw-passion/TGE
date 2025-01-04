@@ -8,24 +8,15 @@
 
 using namespace std;
 
-struct ENGINE_API UIElementSettings
-{
-    UI4Vec padding = {0, 0, 0, 0};
-    UI4Vec margin = {0, 0, 0, 0};
-};
-
 class ENGINE_API UIElement
 {
 protected:
-    sf::FloatRect m_Rect = sf::FloatRect(0, 0, 0, 0);
-    UIElementSettings m_UISettings;
+    UIRect m_Rect;
 
 public:
-    virtual void Update() = 0;
+    virtual void Update();
 
 public:
-    inline sf::FloatRect GetUIRect() const { return m_Rect; }
-    inline void SetUIRect(sf::FloatRect rect) { m_Rect = rect; }
-    inline UIElementSettings GetUIElementSettings() const { return m_UISettings; }
-    inline void SetUIElementSettings(UIElementSettings settings) { m_UISettings = settings; }
+    inline UIRect& GetUIRect() { return m_Rect; }
+    void SetUIPosition(float x, float y);
 };

@@ -1,28 +1,32 @@
 #include "UITextElement.h"
 
-UITextElement::UITextElement()
+UITextElement::UITextElement() {
+  m_Background.setFillColor(sf::Color::Transparent);
+  m_Background.setOutlineColor(sf::Color::White);
+  m_Background.setOutlineThickness(1);
+  m_bBackgroundVisible = false;
+}
+
+void UITextElement::UpdateBackground()
 {
-    m_Background.setFillColor(sf::Color::Transparent);
-    m_Background.setOutlineColor(sf::Color::White);
-    m_Background.setOutlineThickness(1);
-    m_bBackgroundVisible = false;
+    m_Background.setPosition(m_Rect.inner.left, m_Rect.inner.top);
+    m_Background.setSize(sf::Vector2f(m_Rect.inner.width, m_Rect.inner.height));
 }
 
 void UITextElement::Init(sf::RenderWindow* window)
 {
     UIDrawableElement::Init(window);
-
-    m_Background.setPosition(m_Rect.left, m_Rect.top);
-    m_Background.setSize(sf::Vector2f(m_Rect.width, m_Rect.height));
 }
 
 void UITextElement::Update()
 {
-    UIDrawableElement::Update();
+    m_Rect.outer.width = getGlobalBounds().width + m_Rect.padding.left + m_Rect.padding.right;
+    m_Rect.outer.height = getGlobalBounds().height + m_Rect.padding.top + m_Rect.padding.bottom;
 
-    m_Rect = getGlobalBounds();
-    m_Background.setPosition(m_Rect.left, m_Rect.top);
-    m_Background.setSize(sf::Vector2f(m_Rect.width, m_Rect.height));
+    UIDrawableElement::Update();
+    UpdateBackground();
+
+    setPosition(m_Rect.inner.left, m_Rect.inner.top);
 }
 
 void UITextElement::Draw()
