@@ -5,7 +5,7 @@
 #include "../Util/FontManager.h"
 #include <SFML/Graphics.hpp>
 
-class ENGINE_API UITextElement : public UIDrawableElement, public sf::Text
+class ENGINE_API UIText : public UIDrawableElement, public sf::Text
 {
 private:
     sf::RectangleShape m_Background;
@@ -15,7 +15,7 @@ private:
     void UpdateBackground();
 
 public:
-    UITextElement();
+    UIText();
 
 public:
     virtual void Init(sf::RenderWindow* window);

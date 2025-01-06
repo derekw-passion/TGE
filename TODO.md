@@ -1,11 +1,11 @@
 ## General
 <ul>
-	<li>changed TODO.txt to TODO.md</li>
 	<li>namespace everything</li>
 </ul>
 
 ## UI
 <ul>
+	<li>Gradient and other bells and whistles to UIText</li>
 	<li>Grid</li>
 		<ul>
 		<li>implement columns</li>

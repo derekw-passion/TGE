@@ -1,24 +1,24 @@
-#include "UITextElement.h"
+#include "UIText.h"
 
-UITextElement::UITextElement() {
+UIText::UIText() {
   m_Background.setFillColor(sf::Color::Transparent);
   m_Background.setOutlineColor(sf::Color::White);
   m_Background.setOutlineThickness(1);
   m_bBackgroundVisible = false;
 }
 
-void UITextElement::UpdateBackground()
+void UIText::UpdateBackground()
 {
     m_Background.setPosition(m_Rect.inner.left, m_Rect.inner.top);
     m_Background.setSize(sf::Vector2f(m_Rect.inner.width, m_Rect.inner.height));
 }
 
-void UITextElement::Init(sf::RenderWindow* window)
+void UIText::Init(sf::RenderWindow* window)
 {
     UIDrawableElement::Init(window);
 }
 
-void UITextElement::Update()
+void UIText::Update()
 {
     m_Rect.outer.width = getGlobalBounds().width + m_Rect.padding.left + m_Rect.padding.right;
     m_Rect.outer.height = getGlobalBounds().height + m_Rect.padding.top + m_Rect.padding.bottom;
@@ -29,7 +29,7 @@ void UITextElement::Update()
     setPosition(m_Rect.inner.left, m_Rect.inner.top);
 }
 
-void UITextElement::Draw()
+void UIText::Draw()
 {
     UIDrawableElement::Draw();
 

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../Engine/TextGameEngine.h"
-#include "../Engine/UI/UITextElement.h"
+#include "../Engine/UI/UIText.h"
 #include "test_defs.h"
 
 class TestGameEngine : public TextGameEngine
 {
 private:
-    UITextElement m_TextElement;
+    UIText m_Text;
 
 protected:
     int Init() override;
