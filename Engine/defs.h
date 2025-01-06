@@ -1,3 +1,6 @@
 #pragma once
 
-#define ENGINE_API __declspec(dllexport)
+namespace TGE
+{
+    #define ENGINE_API __declspec(dllexport)
+}

@@ -4,7 +4,9 @@
 #include "../Engine/UI/UIText.h"
 #include "test_defs.h"
 
-class TestGameEngine : public TextGameEngine
+using namespace TGE;
+
+class TestGameEngine : public TGE::TextGameEngine
 {
 private:
     UIText m_Text;

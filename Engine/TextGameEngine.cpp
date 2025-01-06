@@ -1,71 +1,74 @@
 #include "TextGameEngine.h"
 #include "Util/Logger.h"
 
-TextGameEngine::TextGameEngine() {}
-TextGameEngine::~TextGameEngine()
+namespace TGE
 {
-    FontManager::UnloadFonts();
-}
-
-void TextGameEngine::GameLoop()
-{
-    while(m_Window.isOpen())
+    TextGameEngine::TextGameEngine() {}
+    TextGameEngine::~TextGameEngine()
     {
-        try
+        FontManager::UnloadFonts();
+    }
+
+    void TextGameEngine::GameLoop()
+    {
+        while(m_Window.isOpen())
         {
-            sf::Event event;
-            while(m_Window.pollEvent(event))
+            try
             {
-                if(event.type == sf::Event::Closed)
+                sf::Event event;
+                while(m_Window.pollEvent(event))
                 {
-                    m_Window.close();
+                    if(event.type == sf::Event::Closed)
+                    {
+                        m_Window.close();
+                    }
+
+                    HandleInput(event);
                 }
 
-                HandleInput(event);
+                Update();
+                Render();
             }
-
-            Update();
-            Render();
+            catch(const char* e)
+            {
+                Logger::Log(LogLevel::ERROR, e);
+                Logger::Log(LogLevel::ERROR, "Exiting...");
+                exit(-1);
+            }
         }
-        catch(const char* e)
+    }
+
+    void TextGameEngine::RenderBegin()
+    {
+        m_Window.clear(settings.clearColor);
+    }
+
+    void TextGameEngine::RenderEnd()
+    {
+        m_Window.display();
+    }
+
+    int TextGameEngine::Start()
+    {
+        Logger::Log(LogLevel::INFO, "Building window");
+        
+        m_Window.create(settings.videoMode, settings.title);
+        m_Window.setFramerateLimit(settings.frameRateLimit);
+
+        Logger::Log(LogLevel::INFO, "Initializing engine");
+        if(Init() != 0)
         {
-            Logger::Log(LogLevel::ERROR, e);
-            Logger::Log(LogLevel::ERROR, "Exiting...");
-            exit(-1);
+            Logger::Log(LogLevel::ERROR, "Failed to initialize engine");
+            return -1;
         }
+        else
+        {
+            Logger::Log(LogLevel::INFO, "Engine initialized");
+        }
+
+        Logger::Log(LogLevel::INFO, "Entering game loop");
+        GameLoop();
+        
+        return 0;
     }
-}
-
-void TextGameEngine::RenderBegin()
-{
-    m_Window.clear(settings.clearColor);
-}
-
-void TextGameEngine::RenderEnd()
-{
-    m_Window.display();
-}
-
-int TextGameEngine::Start()
-{
-    Logger::Log(LogLevel::INFO, "Building window");
-    
-    m_Window.create(settings.videoMode, settings.title);
-    m_Window.setFramerateLimit(settings.frameRateLimit);
-
-    Logger::Log(LogLevel::INFO, "Initializing engine");
-    if(Init() != 0)
-    {
-        Logger::Log(LogLevel::ERROR, "Failed to initialize engine");
-        return -1;
-    }
-    else
-    {
-        Logger::Log(LogLevel::INFO, "Engine initialized");
-    }
-
-    Logger::Log(LogLevel::INFO, "Entering game loop");
-    GameLoop();
-    
-    return 0;
-}
+} // namespace TGE

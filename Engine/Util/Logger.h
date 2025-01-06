@@ -7,47 +7,50 @@
 
 using namespace std;
 
-struct ENGINE_API LoggerSettings
+namespace TGE
 {
-    bool bPrelude;
-    bool bTimeStamp;
-    bool bLogToFile;
-    bool bPrintToConsole;
-    string sLogFile;
-    string sPrelude;
-    string sDelimiter;
-
-    LoggerSettings()
+    struct ENGINE_API LoggerSettings
     {
-        bPrelude = true;
-        bTimeStamp = false;
-        bLogToFile = false;
-        bPrintToConsole = true;
-        sLogFile = "log.txt";
-        sPrelude = "[ENGINE]";
-        sDelimiter = " ";
-    }
-};
+        bool bPrelude;
+        bool bTimeStamp;
+        bool bLogToFile;
+        bool bPrintToConsole;
+        string sLogFile;
+        string sPrelude;
+        string sDelimiter;
 
-enum LogLevel
-{
-    INFO,
-    WARNING,
-    ERROR
-};
+        LoggerSettings()
+        {
+            bPrelude = true;
+            bTimeStamp = false;
+            bLogToFile = false;
+            bPrintToConsole = true;
+            sLogFile = "log.txt";
+            sPrelude = "[ENGINE]";
+            sDelimiter = " ";
+        }
+    };
 
-class ENGINE_API Logger
-{
-public:
-    // Singleton insurance
-    Logger(Logger const&) = delete;
-    void operator=(Logger const&) = delete;
+    enum LogLevel
+    {
+        INFO,
+        WARNING,
+        ERROR
+    };
 
-private:
-    static LoggerSettings m_Settings;
+    class ENGINE_API Logger
+    {
+    public:
+        // Singleton insurance
+        Logger(Logger const&) = delete;
+        void operator=(Logger const&) = delete;
 
-    static void Print(const char* message);
-public:
-    static void Init(LoggerSettings settings);
-    static void Log(LogLevel level, string format, ...);
-};
+    private:
+        static LoggerSettings m_Settings;
+
+        static void Print(const char* message);
+    public:
+        static void Init(LoggerSettings settings);
+        static void Log(LogLevel level, string format, ...);
+    };
+} // namespace TGE

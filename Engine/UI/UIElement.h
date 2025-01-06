@@ -8,15 +8,18 @@
 
 using namespace std;
 
-class ENGINE_API UIElement
+namespace TGE
 {
-protected:
-    UIRect m_Rect;
+    class ENGINE_API UIElement
+    {
+    protected:
+        UIRect m_Rect;
 
-public:
-    virtual void Update();
+    public:
+        virtual void Update();
 
-public:
-    inline UIRect& GetUIRect() { return m_Rect; }
-    void SetUIPosition(float x, float y);
-};
+    public:
+        inline UIRect& GetUIRect() { return m_Rect; }
+        void SetUIPosition(float x, float y);
+    };
+} // namespace TGE

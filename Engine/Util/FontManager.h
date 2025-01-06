@@ -8,13 +8,16 @@
 
 using namespace std;
 
-class ENGINE_API FontManager
+namespace TGE
 {
-private:
-    static map<string, sf::Font*> m_Fonts;
+    class ENGINE_API FontManager
+    {
+    private:
+        static map<string, sf::Font*> m_Fonts;
 
-public:
-    static int LoadFont(string name, string path);
-    static sf::Font* GetFont(string name);
-    static void UnloadFonts();
-};
+    public:
+        static int LoadFont(string name, string path);
+        static sf::Font* GetFont(string name);
+        static void UnloadFonts();
+    };
+} // namespace TGE
