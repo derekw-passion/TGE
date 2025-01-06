@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Lib/defs.h"
+#include "../defs.h"
 #include "UIElement.h"
 
 class ENGINE_API UIDrawableElement : public UIElement

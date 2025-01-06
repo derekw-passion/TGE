@@ -4,7 +4,8 @@
         "xstring": "cpp",
         "iostream": "cpp",
         "ctime": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "vector": "cpp"
     },
     "C_Cpp.default.compilerPath": "C:\\Program Files\\msys2\\mingw64\\bin\\clang++.exe"
 }

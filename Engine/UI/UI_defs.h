@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Lib/defs.h"
+#include "../defs.h"
 #include <SFML/Graphics.hpp>
 
 struct ENGINE_API UI4Vec

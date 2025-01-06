@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Lib/defs.h"
+#include "defs.h"
 #include "Util/FontManager.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

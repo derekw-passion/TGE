@@ -1,5 +1,5 @@
 #include "TestGameEngine.h"
-#include "../Engine/Lib/Logger.h"
+#include "../Engine/Util/Logger.h"
 
 int main(int argc, char* argv[])
 {
