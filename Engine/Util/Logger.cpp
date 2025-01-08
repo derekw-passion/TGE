@@ -2,14 +2,14 @@
 
 namespace TGE
 {
-    LoggerSettings Logger::m_Settings = LoggerSettings();
+    LoggerSettings Logger::LoggerSettings = TGE::LoggerSettings();
 
     void Logger::Print(const char* message)
     {
-        if(m_Settings.bLogToFile)
+        if(LoggerSettings.bLogToFile)
         {
             FILE* file = nullptr;
-            if(!fopen_s(&file, m_Settings.sLogFile.c_str(), "a"))
+            if(!fopen_s(&file, LoggerSettings.sLogFile.c_str(), "a"))
             {
                 fprintf(file, "%s\n", message);
                 fclose(file);
@@ -19,13 +19,13 @@ namespace TGE
                 printf("Failed to open log file for writing\n");
         }
         
-        if(m_Settings.bPrintToConsole)
+        if(LoggerSettings.bPrintToConsole)
             printf("%s\n", message);
     }
 
-    void Logger::Init(LoggerSettings settings)
+    void Logger::Init(TGE::LoggerSettings settings)
     {
-        m_Settings = settings;
+        LoggerSettings = settings;
     }
 
     void Logger::Log(LogLevel level, string format, ...)
@@ -35,7 +35,7 @@ namespace TGE
 
         string fullMessage;
 
-        if(m_Settings.bTimeStamp)
+        if(LoggerSettings.bTimeStamp)
         {
             time_t now = time(0);
             struct tm localTime;
@@ -44,7 +44,7 @@ namespace TGE
             char timeString[100];
             strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", &localTime);
 
-            fullMessage = "[" + string(timeString) + "]" + m_Settings.sDelimiter;
+            fullMessage = "[" + string(timeString) + "]" + LoggerSettings.sDelimiter;
         }
 
         char buffer[1024];
@@ -54,18 +54,18 @@ namespace TGE
         switch(level)
         {
             case INFO:
-                fullMessage = "[INFO]" + m_Settings.sDelimiter + fullMessage;
+                fullMessage = "[INFO]" + LoggerSettings.sDelimiter + fullMessage;
                 break;
             case WARNING:
-                fullMessage = "[WARNING]" + m_Settings.sDelimiter + fullMessage;
+                fullMessage = "[WARNING]" + LoggerSettings.sDelimiter + fullMessage;
                 break;
             case ERROR:
-                fullMessage = "[ERROR]" + m_Settings.sDelimiter + fullMessage;
+                fullMessage = "[ERROR]" + LoggerSettings.sDelimiter + fullMessage;
                 break;
         }
 
-        if(m_Settings.bPrelude)
-            fullMessage = m_Settings.sPrelude + m_Settings.sDelimiter + fullMessage;
+        if(LoggerSettings.bPrelude)
+            fullMessage = LoggerSettings.sPrelude + LoggerSettings.sDelimiter + fullMessage;
 
         Print(fullMessage.c_str());
         va_end(args);

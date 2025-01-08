@@ -46,11 +46,11 @@ namespace TGE
         void operator=(Logger const&) = delete;
 
     private:
-        static LoggerSettings m_Settings;
+        static LoggerSettings LoggerSettings;
 
         static void Print(const char* message);
     public:
-        static void Init(LoggerSettings settings);
+        static void Init(TGE::LoggerSettings settings);
         static void Log(LogLevel level, string format, ...);
     };
 } // namespace TGE

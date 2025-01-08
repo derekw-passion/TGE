@@ -2,11 +2,12 @@
 
 namespace TGE
 {
-    UIText::UIText() {
-    m_Background.setFillColor(sf::Color::Transparent);
-    m_Background.setOutlineColor(sf::Color::White);
-    m_Background.setOutlineThickness(1);
-    m_bBackgroundVisible = false;
+    UIText::UIText()
+    {
+        m_Background.setFillColor(sf::Color::Transparent);
+        m_Background.setOutlineColor(sf::Color::White);
+        m_Background.setOutlineThickness(1);
+        m_bBackgroundVisible = false;
     }
 
     void UIText::UpdateBackground()

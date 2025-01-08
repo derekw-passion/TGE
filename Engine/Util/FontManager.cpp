@@ -2,7 +2,7 @@
 
 namespace TGE
 {
-    map<string, sf::Font*> FontManager::m_Fonts;
+    map<string, sf::Font*> FontManager::Fonts;
 
     int FontManager::LoadFont(string name, string path)
     {
@@ -15,27 +15,27 @@ namespace TGE
         }
         else
         {
-            m_Fonts[name] = pFont;
+            Fonts[name] = pFont;
             return 0;
         }
     }
 
     sf::Font* FontManager::GetFont(string name)
     {
-        if(m_Fonts.at(name)->getInfo().family == "")
+        if(Fonts.at(name)->getInfo().family == "")
         {
             throw std::runtime_error("Font '" + name + "' not loaded");
         }
 
-        return m_Fonts.at(name);
+        return Fonts.at(name);
     }
 
     void FontManager::UnloadFonts()
     {
-        for(auto& font : m_Fonts)
+        for(auto& font : Fonts)
         {
             delete font.second;
         }
-        m_Fonts.clear();
+        Fonts.clear();
     }
 } // namespace TGE

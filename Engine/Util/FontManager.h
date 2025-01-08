@@ -13,7 +13,7 @@ namespace TGE
     class ENGINE_API FontManager
     {
     private:
-        static map<string, sf::Font*> m_Fonts;
+        static map<string, sf::Font*> Fonts;
 
     public:
         static int LoadFont(string name, string path);
