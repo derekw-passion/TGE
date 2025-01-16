@@ -11,10 +11,13 @@ namespace TGE
 {
     struct ENGINE_API CommandParserSettings
     {
-        string sCommandPrefix = "/[";
-        string sCommandAffix = "]";
+        string sCommandDelimiter = "/";
         string sArgDelimiter = ":";
+        string sObjectPrefix = "[";
+        string sObjectAffix = "]";
     };
+
+    typedef vector<std::pair<string, vector<string>>> UITextCommandList;
 
     class ENGINE_API CommandParser
     {
@@ -22,9 +25,13 @@ namespace TGE
         static CommandParserSettings CommandParserSettings;
 
     private:
-        static void ParseCommand(string command, string& outCommand, vector<string>& outArgs);
+        // ie: "/c:0:255:0:255[this text is green]"
+        static void ParseCommand(string command, string& outCommand, vector<string>& outArgs, string& outObject);
     public:
         static void Init(TGE::CommandParserSettings settings);
-        static int ParseCommands(string commands, vector<string>& outCommands, map<string, vector<string>>& outArgs);
+
+        // ie: "/c:0:255:0:255[this text is green] /c:255:0:0:255[this text is red]"
+        static int ParseCommands(string commands, UITextCommandList& out);
+        static void FormatCommand(string& out, string command, vector<string> args, string object);
     };
 } // namespace TGE

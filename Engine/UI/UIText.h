@@ -2,8 +2,10 @@
 
 #include "../defs.h"
 #include "UIDrawableElement.h"
-#include "../Util/FontManager.h"
+#include "../FontManager.h"
+#include "../Util/CommandParser.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 namespace TGE
 {
@@ -12,6 +14,7 @@ namespace TGE
     private:
         sf::RectangleShape m_Background;
         bool m_bBackgroundVisible = false;
+        vector<sf::Text> m_TextElems;
 
     private:
         void UpdateBackground();
@@ -27,5 +30,6 @@ namespace TGE
     public:
         inline void SetBackgroundVisible(bool visible) { m_bBackgroundVisible = visible; }
         inline void SetBackground(sf::RectangleShape background) { m_Background = background; }
+        void SetText(string text);
     };
 } // namespace TGE

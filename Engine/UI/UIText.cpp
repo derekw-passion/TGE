@@ -29,7 +29,13 @@ namespace TGE
         UIDrawableElement::Update();
         UpdateBackground();
 
-        setPosition(m_Rect.inner.left, m_Rect.inner.top);
+        float currentX = m_Rect.inner.left;
+        for(auto& text : m_TextElems)
+        {
+            // text.getGlobalBounds().height / 3 to center vertically to compensate for weird text positioning by SFML
+            text.setPosition(currentX, m_Rect.inner.top - text.getGlobalBounds().height / 3);
+            currentX = currentX + text.getGlobalBounds().width;
+        }
     }
 
     void UIText::Draw()
@@ -41,6 +47,72 @@ namespace TGE
             m_pWindow->draw(m_Background);
         }
 
-        m_pWindow->draw(*this);
+        for(auto& text : m_TextElems)
+        {
+            m_pWindow->draw(text);
+        }
     }
+
+    void UIText::SetText(string text)
+    {
+        UITextCommandList commands;
+        string newStr = "";
+        CommandParser::ParseCommands(text, commands);
+
+        if(commands.empty())
+        {
+            setString(text);
+
+            sf::Text t = sf::Text(*this);
+            t.setFillColor(sf::Color::White);
+            t.setString(text);
+
+            m_TextElems.push_back(t);
+        }
+
+        else
+        {
+            // go through each command
+            for(const auto& command : commands)
+            {
+                // color command
+                if(command.first == "c")
+                {
+                    int r, g, b, a = 255;
+
+                    for(size_t i = 0; i < command.second.size()-1; i++)
+                    {
+                        switch(i)
+                        {
+                            case 0:
+                                r = stoi(command.second[i]);
+                                break;
+                            case 1:
+                                g = stoi(command.second[i]);
+                                break;
+                            case 2:
+                                b = stoi(command.second[i]);
+                                break;
+                            case 3:
+                                a = stoi(command.second[i]);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    string obj = command.second[command.second.size()-1];
+
+                    sf::Text t = sf::Text(*this);
+                    t.setFillColor(sf::Color(r, g, b, a));
+                    t.setString(obj);
+
+                    m_TextElems.push_back(t);
+                    newStr += obj;
+                }
+            }
+
+            setString(newStr);
+        }
+    } 
 } // namespace TGE

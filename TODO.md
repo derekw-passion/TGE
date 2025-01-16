@@ -2,8 +2,8 @@
 
 ## UI
 <ul>
-	<li>Streamline having different colors for different letters using the same UIText object</li>
-	<li>Color gradient (2- and 3-point), glow, and other bells and whistles to UIText</li>
+	<li>Nested command support</li>
+	<li>Color gradient (2- and 3-point), glow, style, and other commands</li>
 	<li>Grid</li>
 		<ul>
 		<li>columns</li>

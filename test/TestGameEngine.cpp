@@ -23,9 +23,7 @@ int TestGameEngine::Init()
     m_Text.Init(GetWindow());
     m_Text.setFont(*FontManager::GetFont(FONT_ARIAL));
     m_Text.setFillColor(sf::Color::White);
-    m_Text.setString("Hello, World!");
-    m_Text.setCharacterSize(16);
-    m_Text.SetBackgroundVisible(true);
+    m_Text.setCharacterSize(36);
     
     sf::RectangleShape bg;
     bg.setOutlineColor(sf::Color::Green);
@@ -34,8 +32,8 @@ int TestGameEngine::Init()
     m_Text.SetBackground(bg);
     m_Text.SetBackgroundVisible(false);
     m_Text.GetUIRect().padding = UI4Vec(10, 10, 10, 10);
-    m_Text.SetUIPosition(10, 10);
     m_Text.SetDebug(true);
+    m_Text.SetText("/c:0:255:0:255[Hello ] /c:0:0:255[World]");
 
     return 0;
 }

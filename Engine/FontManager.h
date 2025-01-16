@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../defs.h"
-#include "Logger.h"
+#include "defs.h"
+#include "Util/Logger.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
