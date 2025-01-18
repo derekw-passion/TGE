@@ -4,60 +4,72 @@ namespace TGE
 {
     CommandParserSettings CommandParser::CommandParserSettings = TGE::CommandParserSettings();
 
-    void CommandParser::ParseCommand(string command, string& outCommand,
-                                    vector<string>& outArgs,
+    void CommandParser::ParseSingleObject(string command, vector<string>& outCommands,
+                                    vector<vector<string>>& outArgs,
                                     string& outObject)
     {
-        outCommand = "";
+        outCommands.clear();
         outArgs.clear();
         outObject = "";
 
-        size_t pos = 0;
+        size_t cmdPos = 0;
+        size_t argPos = 0;
+        size_t objPrePos = 0;
+        size_t objPostPos = 0;
+        int cmdCount = 0;
 
-        pos = command.find(CommandParserSettings.sCommandDelimiter);
-        if (pos != string::npos)
+        while((cmdPos = command.find(CommandParserSettings.sCommandDelimiter)) != string::npos)
         {
-            command.erase(0, pos + CommandParserSettings.sCommandDelimiter.length());
+            command.erase(0, cmdPos + CommandParserSettings.sCommandDelimiter.length());
 
-            pos = command.find(CommandParserSettings.sArgDelimiter);
-            if(pos != string::npos)
+            size_t cmdEndPos = command.find(CommandParserSettings.sArgDelimiter);
+            if(cmdEndPos == string::npos)
             {
-                outCommand = command.substr(0, pos);
-                command.erase(0, pos + CommandParserSettings.sArgDelimiter.length());
+                cmdEndPos = command.find(CommandParserSettings.sCommandDelimiter);
 
-                while((pos = command.find(CommandParserSettings.sArgDelimiter)) != string::npos)
+                if(cmdEndPos == string::npos)
                 {
-                    outArgs.push_back(command.substr(0, pos));
-                    command.erase(0, pos + CommandParserSettings.sArgDelimiter.length());
-                }
-
-                if(!command.empty())
-                {
-                    if((pos = command.find(CommandParserSettings.sObjectPrefix)) != string::npos)
-                    {
-                        outArgs.push_back(command.substr(0, pos));
-                        command.erase(0, pos);
-                    }
+                    cmdEndPos = command.find(CommandParserSettings.sObjectPrefix);
                 }
             }
 
-            pos = command.find(CommandParserSettings.sObjectPrefix);
-            if(pos != string::npos)
+            outCommands.push_back(command.substr(0, cmdEndPos));
+
+            size_t nextCmdPos = command.find(CommandParserSettings.sCommandDelimiter);
+            string cmdSubstr = command.substr(0, nextCmdPos);
+
+            vector<string> args;
+            while((argPos = cmdSubstr.find(CommandParserSettings.sArgDelimiter)) != string::npos)
             {
-                if(outCommand.empty())
+                cmdSubstr.erase(0, argPos + CommandParserSettings.sArgDelimiter.length());
+                
+                size_t nextArgPos = cmdSubstr.find(CommandParserSettings.sArgDelimiter);
+                if(nextArgPos == string::npos)
                 {
-                    outCommand = command.substr(0, pos);
+                    size_t objPrefixPos = cmdSubstr.find(CommandParserSettings.sObjectPrefix);
+                    args.push_back(cmdSubstr.substr(0, objPrefixPos));
+                    break;
                 }
 
-                command.erase(0, pos + CommandParserSettings.sObjectPrefix.length());
-
-                pos = command.find(CommandParserSettings.sObjectAffix);
-                if(pos != string::npos)
+                else
                 {
-                    outObject = command.substr(0, pos);
+                    args.push_back(cmdSubstr.substr(0, nextArgPos));
                 }
+            }
+
+            outArgs.push_back(args);
+            cmdCount++;
+        }
+
+        if((objPrePos = command.find(CommandParserSettings.sObjectPrefix)) != string::npos)
+        {
+            objPrePos += CommandParserSettings.sObjectPrefix.length();
+            if((objPostPos = command.find(CommandParserSettings.sObjectAffix)) != string::npos)
+            {
+                outObject = command.substr(objPrePos, objPostPos-objPrePos);
             }
         }
+
     }
 
     void CommandParser::Init(TGE::CommandParserSettings settings)
@@ -65,35 +77,36 @@ namespace TGE
         CommandParserSettings = settings;
     }
 
-    int CommandParser::ParseCommands(string commands,
-                                    UITextCommandList& out)
+    int CommandParser::ParseMultipleObjects(string in,
+                                        CommandObjectList& out)
     {
-        size_t pos = 0;
-        vector<string> commandsSplit;
-        while((pos = commands.find(CommandParserSettings.sCommandDelimiter)) != string::npos)
-        {
-            size_t pos2 = commands.find(CommandParserSettings.sObjectAffix) + CommandParserSettings.sObjectAffix.length();
-            commandsSplit.push_back(commands.substr(0, pos2));
-            commands.erase(0, pos2);
-        }
+        out.clear();
 
-        for(auto& command : commandsSplit)
+        vector<string> commands;
+        vector<vector<string>> args;
+        string object;
+
+        size_t objPos = 0;
+
+        while((objPos = in.find(CommandParserSettings.sObjectAffix)) != string::npos)
         {
-            string outCommand;
-            vector<string> outArgs;
-            string outObject;
-            ParseCommand(command, outCommand, outArgs, outObject);
-            out.push_back(pair<string, vector<string>>(outCommand, outArgs));
-            out.rbegin()->second.push_back(outObject);
+            string command = in.substr(0, objPos + CommandParserSettings.sObjectAffix.length());
+            ParseSingleObject(command, commands, args, object);
+            for(auto& arg : args)
+            {
+                arg.push_back(object);
+            }
+            out.push_back(std::make_pair(commands, args));
+            in.erase(0, objPos + CommandParserSettings.sObjectAffix.length());
         }
 
         return out.size();
     }
 
-    void CommandParser::FormatCommand(string &out, string command,
-                                      vector<string> args, string object)
+    void CommandParser::FormatObject(string &out, string in,
+                                    vector<string> args, string object)
     {
-        out = CommandParserSettings.sCommandDelimiter + command + CommandParserSettings.sArgDelimiter;
+        out = CommandParserSettings.sCommandDelimiter + in + CommandParserSettings.sArgDelimiter;
         for(auto& arg : args)
         {
             out += arg + CommandParserSettings.sArgDelimiter;

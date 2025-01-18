@@ -17,7 +17,7 @@ namespace TGE
         string sObjectAffix = "]";
     };
 
-    typedef vector<std::pair<string, vector<string>>> UITextCommandList;
+    typedef vector<std::pair<vector<string>, vector<vector<string>>>> CommandObjectList;
 
     class ENGINE_API CommandParser
     {
@@ -25,13 +25,10 @@ namespace TGE
         static CommandParserSettings CommandParserSettings;
 
     private:
-        // ie: "/c:0:255:0:255[this text is green]"
-        static void ParseCommand(string command, string& outCommand, vector<string>& outArgs, string& outObject);
+        static void ParseSingleObject(string command, vector<string>& outCommands, vector<vector<string>>& outArgs, string& outObject);
     public:
         static void Init(TGE::CommandParserSettings settings);
-
-        // ie: "/c:0:255:0:255[this text is green] /c:255:0:0:255[this text is red]"
-        static int ParseCommands(string commands, UITextCommandList& out);
-        static void FormatCommand(string& out, string command, vector<string> args, string object);
+        static int ParseMultipleObjects(string in, CommandObjectList& out);
+        static void FormatObject(string& out, string command, vector<string> args, string object);
     };
 } // namespace TGE

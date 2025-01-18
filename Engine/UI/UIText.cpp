@@ -55,11 +55,11 @@ namespace TGE
 
     void UIText::SetText(string text)
     {
-        UITextCommandList commands;
+        CommandObjectList objs;
         string newStr = "";
-        CommandParser::ParseCommands(text, commands);
+        CommandParser::ParseMultipleObjects(text, objs);
 
-        if(commands.empty())
+        if(objs.empty())
         {
             setString(text);
 
@@ -72,44 +72,73 @@ namespace TGE
 
         else
         {
-            // go through each command
-            for(const auto& command : commands)
+            for(size_t i = 0; i < objs.size(); i++)
             {
-                // color command
-                if(command.first == "c")
-                {
-                    int r, g, b, a = 255;
+                const auto& obj = objs[i];
 
-                    for(size_t i = 0; i < command.second.size()-1; i++)
+                int r, g, b, a = 255;
+                bool bold = false;
+                bool italic = false;
+
+                int cmdNum = 0;
+                for(const auto& cmd : obj.first)
+                {
+                    // color command
+                    if(cmd == "c")
                     {
-                        switch(i)
+                        for(size_t j = 0; j < obj.second[cmdNum].size()-1; j++)
                         {
-                            case 0:
-                                r = stoi(command.second[i]);
-                                break;
-                            case 1:
-                                g = stoi(command.second[i]);
-                                break;
-                            case 2:
-                                b = stoi(command.second[i]);
-                                break;
-                            case 3:
-                                a = stoi(command.second[i]);
-                                break;
-                            default:
-                                break;
+                            string arg = obj.second[cmdNum][j];
+                            int value = stoi(arg);
+
+                            switch(j)
+                            {
+                                case 0:
+                                    r = value;
+                                    break;
+                                case 1:
+                                    g = value;
+                                    break;
+                                case 2:
+                                    b = value;
+                                    break;
+                                case 3:
+                                    a = value;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
 
-                    string obj = command.second[command.second.size()-1];
+                    else if(cmd == "b")
+                    {
+                        bold = true;
+                    }
 
-                    sf::Text t = sf::Text(*this);
-                    t.setFillColor(sf::Color(r, g, b, a));
-                    t.setString(obj);
+                    else if(cmd == "i")
+                    {
+                        italic = true;
+                    }
 
-                    m_TextElems.push_back(t);
-                    newStr += obj;
+                    cmdNum++;
                 }
+
+                vector<string> args = obj.second[0];
+                string objVal = args.size() > 0 ? args.back() : "";
+                
+                if(objVal.empty())
+                {
+                    continue;
+                }
+
+                sf::Text t = sf::Text(*this);
+                t.setFillColor(sf::Color(r, g, b, a));
+                t.setStyle((bold ? sf::Text::Bold : sf::Text::Regular) | (italic ? sf::Text::Italic : sf::Text::Regular));
+                t.setString(objVal);
+
+                m_TextElems.push_back(t);
+                newStr += objVal;
             }
 
             setString(newStr);
