@@ -19,7 +19,7 @@ namespace TGE
 
     struct ENGINE_API CommandObject
     {
-        string object;
+        string value;
         vector<string> commands;
         vector<vector<string>> args;
     };

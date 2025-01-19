@@ -24,6 +24,7 @@
 	<li>input/mouse support</li>
 	<li>audio</li>
 	<li>Text wrapping</li>
+	<li>Update dims of all UI elements based on window size</li>
 	<li>UIAnimatedText</li>
 	<li>ASCII sprites</li>
 	<li>LUA</li>

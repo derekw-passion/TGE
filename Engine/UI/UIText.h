@@ -9,6 +9,12 @@
 
 namespace TGE
 {
+    struct UITextSettings
+    {
+        sf::Color color;
+        bool bold, italic;
+    };
+
     class ENGINE_API UIText : public UIDrawableElement, public sf::Text
     {
     private:
@@ -18,6 +24,7 @@ namespace TGE
 
     private:
         void UpdateBackground();
+        void ParseCommand(string command, vector<string> args, UITextSettings& outSettings);
 
     public:
         UIText();
