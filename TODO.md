@@ -1,8 +1,10 @@
 ## General
+<ul>
+	<li>Comment all engine code so far</li>
+</ul>
 
 ## UI
 <ul>
-	<li>Upgrade CommandParser system; refactor UIText::SetText command parsing</li>
 	<li>Color gradient (2- and 3-point), glow, style, and other commands</li>
 	<li>Grid</li>
 		<ul>

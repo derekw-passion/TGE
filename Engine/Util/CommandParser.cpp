@@ -78,7 +78,7 @@ namespace TGE
     }
 
     int CommandParser::ParseMultipleObjects(string in,
-                                        CommandObjectList& out)
+                                        vector<CommandObject>& out)
     {
         out.clear();
 
@@ -96,7 +96,8 @@ namespace TGE
             {
                 arg.push_back(object);
             }
-            out.push_back(std::make_pair(commands, args));
+            
+            out.push_back({object, commands, args});
             in.erase(0, objPos + CommandParserSettings.sObjectAffix.length());
         }
 

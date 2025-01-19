@@ -17,7 +17,12 @@ namespace TGE
         string sObjectAffix = "]";
     };
 
-    typedef vector<std::pair<vector<string>, vector<vector<string>>>> CommandObjectList;
+    struct ENGINE_API CommandObject
+    {
+        string object;
+        vector<string> commands;
+        vector<vector<string>> args;
+    };
 
     class ENGINE_API CommandParser
     {
@@ -28,7 +33,7 @@ namespace TGE
         static void ParseSingleObject(string command, vector<string>& outCommands, vector<vector<string>>& outArgs, string& outObject);
     public:
         static void Init(TGE::CommandParserSettings settings);
-        static int ParseMultipleObjects(string in, CommandObjectList& out);
+        static int ParseMultipleObjects(string in, vector<CommandObject>& out);
         static void FormatObject(string& out, string command, vector<string> args, string object);
     };
 } // namespace TGE

@@ -23,7 +23,15 @@ namespace TGE
 
     void UIText::Update()
     {
-        m_Rect.outer.width = getGlobalBounds().width + m_Rect.padding.left + m_Rect.padding.right;
+        // get the width and height of the total text
+        m_Rect.inner.width = 0;
+        for(const auto& text : m_TextElems)
+        {
+            m_Rect.inner.width += text.getLocalBounds().width;
+        }
+
+        // update outer rect
+        m_Rect.outer.width = m_Rect.inner.width + m_Rect.padding.left + m_Rect.padding.right;
         m_Rect.outer.height = getGlobalBounds().height + m_Rect.padding.top + m_Rect.padding.bottom;
 
         UIDrawableElement::Update();
@@ -55,7 +63,7 @@ namespace TGE
 
     void UIText::SetText(string text)
     {
-        CommandObjectList objs;
+        vector<CommandObject> objs;
         string newStr = "";
         CommandParser::ParseMultipleObjects(text, objs);
 
@@ -81,14 +89,14 @@ namespace TGE
                 bool italic = false;
 
                 int cmdNum = 0;
-                for(const auto& cmd : obj.first)
+                for(const auto& cmd : obj.commands)
                 {
                     // color command
                     if(cmd == "c")
                     {
-                        for(size_t j = 0; j < obj.second[cmdNum].size()-1; j++)
+                        for(size_t j = 0; j < obj.args[cmdNum].size()-1; j++)
                         {
-                            string arg = obj.second[cmdNum][j];
+                            string arg = obj.args[cmdNum][j];
                             int value = stoi(arg);
 
                             switch(j)
@@ -124,7 +132,7 @@ namespace TGE
                     cmdNum++;
                 }
 
-                vector<string> args = obj.second[0];
+                vector<string> args = obj.args[0];
                 string objVal = args.size() > 0 ? args.back() : "";
                 
                 if(objVal.empty())
