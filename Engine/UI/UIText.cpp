@@ -146,28 +146,38 @@ namespace TGE
         UIDrawableElement::Init(window);
     }
 
-    void UIText::Update() {
-      SetUIPosition(getPosition().x, getPosition().y);
+    void UIText::Update()
+    {
+        SetUIPosition(getPosition().x, getPosition().y);
 
-      UIDrawableElement::Update();
-      UpdateBackground();
+        UIDrawableElement::Update();
+        UpdateBackground();
 
-      for (const auto &text : m_TextElems) {
-        if (text.getGlobalBounds().height > m_Rect.inner.height) {
-          m_Rect.inner.height = text.getGlobalBounds().height;
+        for (const auto &text : m_TextElems)
+        {
+            if (text.getGlobalBounds().height > m_Rect.inner.height)
+            {
+                m_Rect.inner.height = text.getGlobalBounds().height;
+            }
         }
-      }
 
-      m_Rect.outer.height =
-          m_Rect.inner.height + m_Rect.padding.top + m_Rect.padding.bottom;
+        m_Rect.outer.height =
+            m_Rect.inner.height + m_Rect.padding.top + m_Rect.padding.bottom;
 
-      float addX = 0;
-      for (auto &text : m_TextElems) {
-        text.setPosition(m_Rect.inner.left + addX, getPosition().y);
-        addX += text.getGlobalBounds().width;
-      }
+        float addX = 0;
+        for (auto &text : m_TextElems)
+        {
+            text.setPosition(m_Rect.inner.left + addX, getPosition().y);
+            addX += text.getGlobalBounds().width;
 
-      m_Rect.outer.width = addX + m_Rect.padding.left + m_Rect.padding.right;
+            if (text.getString().getSize() == 1)
+            {
+                // sf::Glyph::advance doesn't seem to work, so this is a temporary solution
+                addX += (text.getCharacterSize() / 8.f) * text.getLetterSpacing();
+            }
+        }
+
+        m_Rect.outer.width = addX + m_Rect.padding.left + m_Rect.padding.right;
     }
 
     void UIText::Draw()
