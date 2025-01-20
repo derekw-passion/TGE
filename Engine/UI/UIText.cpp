@@ -164,14 +164,14 @@ namespace TGE
         float addX = 0;
         for (auto &text : m_TextElems)
         {
-            // temporary solution to height problem
-            text.setPosition(m_Rect.inner.left + addX, m_Rect.inner.top - text.getGlobalBounds().height / 3);
+            // temporary height fix
+            text.setPosition(m_Rect.inner.left + addX, m_Rect.inner.top - m_Rect.inner.height / 3);
             addX += text.getGlobalBounds().width;
 
             if (text.getString().getSize() == 1)
             {
                 // sf::Glyph::advance doesn't seem to work, so this is a temporary solution
-                addX += (text.getCharacterSize() / 8.f) * text.getLetterSpacing();
+                addX += (text.getCharacterSize() / 10.f) * text.getLetterSpacing();
             }
         }
 
