@@ -9,7 +9,7 @@
 
 namespace TGE
 {
-    struct UITextSettings
+    struct SFMLTextSettings
     {
         sf::Color color;
         bool bold, italic;
@@ -24,7 +24,7 @@ namespace TGE
 
     private:
         void UpdateBackground();
-        void ParseCommand(string command, vector<string> args, UITextSettings& outSettings);
+        void ParseObject(CommandObject object);
 
     public:
         UIText();

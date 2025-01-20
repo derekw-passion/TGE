@@ -33,7 +33,7 @@ int TestGameEngine::Init()
     m_Text.SetBackgroundVisible(false);
     m_Text.GetUIRect().padding = UI4Vec(10, 10, 10, 10);
     m_Text.SetDebug(true);
-    m_Text.SetText("/c:0:255:0[Hello ] /c:0:0:255[World ] /c:255:255:0/b/i[bold!]");
+    m_Text.SetText("/c:0:255:0[Hello ] /c:0:0:255[World ] /c:255:255:0/b/i[bold! ] /grad:0:255:0:255:0:0:255:255[Hello]");
 
     return 0;
 }

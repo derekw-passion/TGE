@@ -1,4 +1,5 @@
 #include "UIText.h"
+#include <SFML/Config.hpp>
 
 namespace TGE
 {
@@ -16,75 +17,157 @@ namespace TGE
         m_Background.setSize(sf::Vector2f(m_Rect.inner.width, m_Rect.inner.height));
     }
 
-    void UIText::ParseCommand(string command, vector<string> args, UITextSettings& outSettings)
+    void UIText::ParseObject(CommandObject object)
     {
-        // color
-        if(command == "c")
+        sf::Color start, end;
+        bool gradient = false, bold = false, italic = false;
+
+        for(size_t i = 0; i < object.commands.size(); i++)
         {
-            for(size_t j = 0; j < args.size()-1; j++)
+            const auto& cmd = object.commands[i];
+            const auto& args = object.args;
+
+            // color
+            if(cmd == "c")
             {
-                int value = stoi(args[j]);
-                switch(j)
+                for(size_t j = 0; j < args[i].size()-1; j++)
                 {
-                    case 0:
-                        outSettings.color.r = value;
-                        break;
-                    case 1:
-                        outSettings.color.g = value;
-                        break;
-                    case 2:
-                        outSettings.color.b = value;
-                        break;
-                    case 3:
-                        outSettings.color.a = value;
-                        break;
-                    default:
-                        break;
+                    int arg = stoi(args[i][j]);
+                    switch(j)
+                    {
+                        case 0:
+                            start.r = arg;
+                            break;
+                        case 1:
+                            start.g = arg;
+                            break;
+                        case 2:
+                            start.b = arg;
+                            break;
+                        case 3:
+                            start.a = arg;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            // bold
+            else if(cmd == "b")
+            {
+                bold = true;
+            }
+
+            // italic
+            else if(cmd == "i")
+            {
+                italic = true;
+            }
+
+            // gradient
+            else if(cmd == "grad")
+            {
+                gradient = true;
+
+                for(size_t j = 0; j < args[i].size()-1; j++)
+                {
+                    int arg = stoi(args[i][j]);
+                    switch(j)
+                    {
+                        case 0:
+                            start.r = arg;
+                            break;
+                        case 1:
+                            start.g = arg;
+                            break;
+                        case 2:
+                            start.b = arg;
+                            break;
+                        case 3:
+                            start.a = arg;
+                            break;
+                        case 4:
+                            end.r = arg;
+                            break;
+                        case 5:
+                            end.g = arg;
+                            break;
+                        case 6:
+                            end.b = arg;
+                            break;
+                        case 7:
+                            end.a = arg;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
-        
-        // bold
-        else if(command == "b")
+
+        string objVal = object.value;
+        sf::Uint32 style = (bold ? sf::Text::Bold : sf::Text::Regular) | (italic ? sf::Text::Italic : sf::Text::Regular);
+
+        if(gradient)
         {
-            outSettings.bold = true;
+            sf::Color color = start;
+            sf::Color diff;
+            diff.r = (end.r - start.r) / objVal.size();
+            diff.g = (end.g - start.g) / objVal.size();
+            diff.b = (end.b - start.b) / objVal.size();
+            diff.a = (end.a - start.a) / objVal.size();
+
+            for(size_t j = 0; j < objVal.size(); j++)
+            {
+                sf::Text t = sf::Text(*this);
+                t.setFillColor(color);
+                t.setString(objVal[j]);
+                t.setStyle(style);
+
+                m_TextElems.push_back(t);
+                color += diff;
+            }
         }
 
-        // italic
-        else if(command == "i")
+        else
         {
-            outSettings.italic = true;
+            sf::Text t = sf::Text(*this);
+            t.setFillColor(start);
+            t.setStyle(style);
+            t.setString(objVal);
+
+            m_TextElems.push_back(t);
         }
     }
 
-    void UIText::Init(sf::RenderWindow* window)
+    void UIText::Init(sf::RenderWindow *window)
     {
         UIDrawableElement::Init(window);
     }
 
-    void UIText::Update()
-    {
-        // get the width and height of the total text
-        m_Rect.inner.width = 0;
-        for(const auto& text : m_TextElems)
-        {
-            m_Rect.inner.width += text.getLocalBounds().width;
+    void UIText::Update() {
+      SetUIPosition(getPosition().x, getPosition().y);
+
+      UIDrawableElement::Update();
+      UpdateBackground();
+
+      for (const auto &text : m_TextElems) {
+        if (text.getGlobalBounds().height > m_Rect.inner.height) {
+          m_Rect.inner.height = text.getGlobalBounds().height;
         }
+      }
 
-        // update outer rect
-        m_Rect.outer.width = m_Rect.inner.width + m_Rect.padding.left + m_Rect.padding.right;
-        m_Rect.outer.height = getGlobalBounds().height + m_Rect.padding.top + m_Rect.padding.bottom;
+      m_Rect.outer.height =
+          m_Rect.inner.height + m_Rect.padding.top + m_Rect.padding.bottom;
 
-        UIDrawableElement::Update();
-        UpdateBackground();
+      float addX = 0;
+      for (auto &text : m_TextElems) {
+        text.setPosition(m_Rect.inner.left + addX, getPosition().y);
+        addX += text.getGlobalBounds().width;
+      }
 
-        float currentX = m_Rect.inner.left;
-        for(auto& text : m_TextElems)
-        {
-            // text.getGlobalBounds().height / 3 to center vertically to compensate for weird text positioning by SFML
-            text.setPosition(currentX, m_Rect.inner.top - text.getGlobalBounds().height / 3);
-            currentX = currentX + text.getGlobalBounds().width;
-        }
+      m_Rect.outer.width = addX + m_Rect.padding.left + m_Rect.padding.right;
     }
 
     void UIText::Draw()
@@ -123,27 +206,7 @@ namespace TGE
         {
             for(size_t i = 0; i < objs.size(); i++)
             {
-                const auto& obj = objs[i];
-
-                UITextSettings settings;
-
-                for(size_t j = 0; j < obj.commands.size(); j++)
-                {
-                    ParseCommand(obj.commands[j], obj.args[j], settings);
-                }
-
-                string objVal = obj.value;
-
-                sf::Text t = sf::Text(*this);
-                t.setFillColor(settings.color);
-                t.setStyle((settings.bold ? sf::Text::Bold : sf::Text::Regular) | (settings.italic ? sf::Text::Italic : sf::Text::Regular));
-                t.setString(objVal);
-                m_TextElems.push_back(t);
-
-                newStr += objVal;
+                ParseObject(objs[i]);
             }
-
-            setString(newStr);
         }
-    } 
-} // namespace TGE
+    } } // namespace TGE

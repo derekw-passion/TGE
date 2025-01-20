@@ -1,11 +1,12 @@
 ## General
 <ul>
 	<li>Comment all engine code so far</li>
+	<li>Start implementing unit tests</li>
 </ul>
 
 ## UI
 <ul>
-	<li>Color gradient (2- and 3-point), glow, style, and other commands</li>
+	<li>Color gradient (2-point), glow, random, and other bells and whistles</li>
 	<li>Grid</li>
 		<ul>
 		<li>columns</li>
