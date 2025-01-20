@@ -1,5 +1,4 @@
 #include "UIText.h"
-#include <SFML/Config.hpp>
 
 namespace TGE
 {
@@ -120,13 +119,13 @@ namespace TGE
 
             for(size_t j = 0; j < objVal.size(); j++)
             {
+                color += diff; // at the start of the loop seems to work better than at the end
                 sf::Text t = sf::Text(*this);
                 t.setFillColor(color);
                 t.setString(objVal[j]);
                 t.setStyle(style);
 
                 m_TextElems.push_back(t);
-                color += diff;
             }
         }
 
@@ -148,8 +147,6 @@ namespace TGE
 
     void UIText::Update()
     {
-        SetUIPosition(getPosition().x, getPosition().y);
-
         UIDrawableElement::Update();
         UpdateBackground();
 
@@ -167,7 +164,8 @@ namespace TGE
         float addX = 0;
         for (auto &text : m_TextElems)
         {
-            text.setPosition(m_Rect.inner.left + addX, getPosition().y);
+            // temporary solution to height problem
+            text.setPosition(m_Rect.inner.left + addX, m_Rect.inner.top - text.getGlobalBounds().height / 3);
             addX += text.getGlobalBounds().width;
 
             if (text.getString().getSize() == 1)
@@ -219,4 +217,5 @@ namespace TGE
                 ParseObject(objs[i]);
             }
         }
-    } } // namespace TGE
+    }
+} // namespace TGE
