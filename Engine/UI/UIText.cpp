@@ -19,7 +19,9 @@ namespace TGE
     void UIText::ParseObject(CommandObject object)
     {
         sf::Color start, end;
-        bool gradient = false, bold = false, italic = false;
+        bool gradient = false;
+        bool rainbow = false;
+        bool bold = false, italic = false;
 
         for(size_t i = 0; i < object.commands.size(); i++)
         {
@@ -103,6 +105,12 @@ namespace TGE
                     }
                 }
             }
+
+            // rainbow
+            else if(cmd == "rbw")
+            {
+                rainbow = true;
+            }
         }
 
         string objVal = object.value;
@@ -119,13 +127,46 @@ namespace TGE
 
             for(size_t j = 0; j < objVal.size(); j++)
             {
-                color += diff; // at the start of the loop seems to work better than at the end
                 sf::Text t = sf::Text(*this);
                 t.setFillColor(color);
                 t.setString(objVal[j]);
                 t.setStyle(style);
 
                 m_TextElems.push_back(t);
+
+                color.r += diff.r;
+                color.g += diff.g;
+                color.b += diff.b;
+                color.a += diff.a;
+            }
+        }
+
+        else if(rainbow)
+        {
+            vector<sf::Color> rainbowColors = {
+                sf::Color::Red,
+                sf::Color::Yellow,
+                sf::Color::Green,
+                sf::Color::Cyan,
+                sf::Color::Blue,
+                sf::Color::Magenta
+            };
+
+            size_t colorIndex = 0;
+            for(size_t j = 0; j < objVal.size(); j++)
+            {
+                sf::Text t = sf::Text(*this);
+                t.setFillColor(rainbowColors[colorIndex]);
+                t.setString(objVal[j]);
+                t.setStyle(style);
+
+                m_TextElems.push_back(t);
+
+                colorIndex++;
+                if(colorIndex == rainbowColors.size())
+                {
+                    colorIndex = 0;
+                }
             }
         }
 
