@@ -1,4 +1,5 @@
 #include "UIText.h"
+#include <stdlib.h>
 
 namespace TGE
 {
@@ -16,11 +17,12 @@ namespace TGE
         m_Background.setSize(sf::Vector2f(m_Rect.inner.width, m_Rect.inner.height));
     }
 
-    void UIText::ParseObject(CommandObject object)
+    void UIText::ExecuteCommandObject(CommandObject object)
     {
         sf::Color start, end;
         bool gradient = false;
         bool rainbow = false;
+        bool random = false;
         bool bold = false, italic = false;
 
         for(size_t i = 0; i < object.commands.size(); i++)
@@ -111,6 +113,12 @@ namespace TGE
             {
                 rainbow = true;
             }
+
+            // random
+            else if(cmd == "rnd")
+            {
+                random = true;
+            }
         }
 
         string objVal = object.value;
@@ -167,6 +175,19 @@ namespace TGE
                 {
                     colorIndex = 0;
                 }
+            }
+        }
+
+        else if(random)
+        {
+            for(size_t j = 0; j < objVal.size(); j++)
+            {
+                sf::Text t = sf::Text(*this);
+                t.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+                t.setString(objVal[j]);
+                t.setStyle(style);
+
+                m_TextElems.push_back(t);
             }
         }
 
@@ -255,7 +276,7 @@ namespace TGE
         {
             for(size_t i = 0; i < objs.size(); i++)
             {
-                ParseObject(objs[i]);
+                ExecuteCommandObject(objs[i]);
             }
         }
     }

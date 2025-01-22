@@ -24,7 +24,7 @@ namespace TGE
 
     private:
         void UpdateBackground();
-        void ParseObject(CommandObject object);
+        void ExecuteCommandObject(CommandObject object);
 
     public:
         UIText();

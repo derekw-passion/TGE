@@ -7,7 +7,7 @@
 ## UI
 <ul>
 	<li>Fix letterspacing issue with gradient</li>
-	<li>Glow, rainbow, random, and other bells and whistles</li>
+	<li>Text glow</li>
 	<li>Grid</li>
 		<ul>
 		<li>columns</li>
