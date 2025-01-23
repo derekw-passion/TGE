@@ -6,8 +6,6 @@
 
 ## UI
 <ul>
-	<li>Fix letterspacing issue with gradient</li>
-	<li>Text glow</li>
 	<li>Grid</li>
 		<ul>
 		<li>columns</li>
@@ -23,6 +21,7 @@
 
 ## Advanced
 <ul>
+	<li>Text glow</li>
 	<li>input/mouse support</li>
 	<li>audio</li>
 	<li>Text wrapping</li>
