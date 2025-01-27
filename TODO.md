@@ -6,7 +6,6 @@
 
 ## UI
 <ul>
-	<li>Pixel & percentage dims</li>
 	<li>Select() for any UIElement</lI>
 	<li>TextOption</li>
 	<li>Button</li>

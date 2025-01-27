@@ -6,15 +6,15 @@
 
 namespace TGE
 {
-    class ENGINE_API UIDrawableElement
+    class ENGINE_API UIElement
     {
     private:
+        UIFRect m_PctRect;
         bool m_bInitialized = false;
         UIDebugRect m_DebugRect;
 
     protected:
         UIIRect m_PixelRect;
-        UIFRect m_PctRect; // note: will not change m_PixelRect if changed directly from a child class
         sf::RenderWindow* m_pWindow;
 
     public:

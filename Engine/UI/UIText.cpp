@@ -204,12 +204,12 @@ namespace TGE
 
     void UIText::Init(sf::RenderWindow *window)
     {
-        UIDrawableElement::Init(window);
+        UIElement::Init(window);
     }
 
     void UIText::Update()
     {
-        UIDrawableElement::Update();
+        UIElement::Update();
         UpdateBackground();
 
         for (const auto &text : m_TextElems)
@@ -242,7 +242,7 @@ namespace TGE
 
     void UIText::Draw()
     {
-        UIDrawableElement::Draw();
+        UIElement::Draw();
 
         if (m_bBackgroundVisible)
         {

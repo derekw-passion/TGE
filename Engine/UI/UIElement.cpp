@@ -1,12 +1,12 @@
-#include "UIDrawableElement.h"
+#include "UIElement.h"
 
 namespace TGE
 {
-    void UIDrawableElement::Init(sf::RenderWindow *window)
+    void UIElement::Init(sf::RenderWindow *window)
     {
         if(window == nullptr)
         {
-            throw "Trying to initialized UIDrawableElement with null window";
+            throw "Trying to initialized UIElement with null window";
         }
 
         m_pWindow = window;
@@ -22,11 +22,11 @@ namespace TGE
         m_bInitialized = true;
     }
 
-    void UIDrawableElement::Update()
+    void UIElement::Update()
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         m_PixelRect.inner.left = m_PixelRect.outer.left + m_PixelRect.padding.left;
@@ -49,11 +49,11 @@ namespace TGE
         }
     }
 
-    void UIDrawableElement::Draw()
+    void UIElement::Draw()
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         if(m_DebugRect.visible)
@@ -63,11 +63,11 @@ namespace TGE
         }
     }
 
-    void UIDrawableElement::SetUIPixelPosition(unsigned int x, unsigned int y)
+    void UIElement::SetUIPixelPosition(unsigned int x, unsigned int y)
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         if(x < 0 || x > m_pWindow->getSize().x) x = m_pWindow->getSize().x / 2;
@@ -79,11 +79,11 @@ namespace TGE
         m_PctRect.outer.top = (float)y / m_pWindow->getSize().y;
     }
 
-    void UIDrawableElement::SetUIPctPosition(float xpct, float ypct)
+    void UIElement::SetUIPctPosition(float xpct, float ypct)
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         if(xpct < 0 || xpct > 1) xpct = 0.5;
@@ -95,11 +95,11 @@ namespace TGE
         m_PixelRect.outer.top = m_pWindow->getSize().y * ypct; 
     }
 
-    void UIDrawableElement::SetUIPixelSize(unsigned int width, unsigned int height)
+    void UIElement::SetUIPixelSize(unsigned int width, unsigned int height)
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         if(width < 0 || width > m_pWindow->getSize().x) width = m_pWindow->getSize().x / 2;
@@ -111,11 +111,11 @@ namespace TGE
         m_PctRect.outer.height = (float)height / m_pWindow->getSize().y;
     }
 
-    void UIDrawableElement::SetUIPctSize(float widthpct, float heightpct)
+    void UIElement::SetUIPctSize(float widthpct, float heightpct)
     {
         if(!m_bInitialized)
         {
-            throw "UIDrawableElement not initialized";
+            throw "UIElement not initialized";
         }
 
         if(widthpct < 0 || widthpct > 1) widthpct = 0.5;

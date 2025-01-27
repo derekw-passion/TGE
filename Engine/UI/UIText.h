@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../defs.h"
-#include "UIDrawableElement.h"
+#include "UIElement.h"
 #include "../FontManager.h"
 #include "../Util/CommandParser.h"
 #include <SFML/Graphics.hpp>
@@ -15,7 +15,7 @@ namespace TGE
         bool bold, italic;
     };
 
-    class ENGINE_API UIText : public UIDrawableElement, public sf::Text
+    class ENGINE_API UIText : public UIElement, public sf::Text
     {
     private:
         sf::RectangleShape m_Background;
