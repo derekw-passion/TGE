@@ -2,24 +2,37 @@
 
 namespace TGE
 {
-    void UIElement::Init(sf::RenderWindow *window)
+void UIElement::Recenter()
+{
+    if(m_bCenteredHorizontal)
     {
-        if(window == nullptr)
-        {
-            throw "Trying to initialized UIElement with null window";
-        }
+        m_PixelRect.outer.left = (m_pWindow->getSize().x - m_PixelRect.outer.width) / 2;
+        m_PctRect.outer.left = (float)m_PixelRect.outer.left / m_pWindow->getSize().x;
+    }
 
-        m_pWindow = window;
+    if(m_bCenteredVertical)
+    {
+        m_PixelRect.outer.top = (m_pWindow->getSize().y - m_PixelRect.outer.height) / 2;
+        m_PctRect.outer.top = (float)m_PixelRect.outer.top / m_pWindow->getSize().y;
+    }
+}
 
-        m_DebugRect.visible = false;
-        m_DebugRect.inner.setFillColor(sf::Color::Transparent);
-        m_DebugRect.inner.setOutlineColor(m_DebugRect.debugColor);
-        m_DebugRect.inner.setOutlineThickness(1);
-        m_DebugRect.outer.setFillColor(sf::Color::Transparent);
-        m_DebugRect.outer.setOutlineColor(m_DebugRect.debugColor);
-        m_DebugRect.outer.setOutlineThickness(1);
+void UIElement::Init(sf::RenderWindow *window) {
+  if (window == nullptr) {
+    throw "Trying to initialized UIElement with null window";
+  }
 
-        m_bInitialized = true;
+  m_pWindow = window;
+
+  m_DebugRect.visible = false;
+  m_DebugRect.inner.setFillColor(sf::Color::Transparent);
+  m_DebugRect.inner.setOutlineColor(m_DebugRect.debugColor);
+  m_DebugRect.inner.setOutlineThickness(1);
+  m_DebugRect.outer.setFillColor(sf::Color::Transparent);
+  m_DebugRect.outer.setOutlineColor(m_DebugRect.debugColor);
+  m_DebugRect.outer.setOutlineThickness(1);
+
+  m_bInitialized = true;
     }
 
     void UIElement::Update()
@@ -39,6 +52,7 @@ namespace TGE
         m_PctRect.inner.width = m_PctRect.outer.width / m_pWindow->getSize().x;
         m_PctRect.inner.height = m_PctRect.outer.height / m_pWindow->getSize().y;
 
+        Recenter(); // just in case Center() was called
 
         if(m_DebugRect.visible)
         {
@@ -125,5 +139,11 @@ namespace TGE
         m_PctRect.outer.height = heightpct;
         m_PixelRect.outer.width = m_pWindow->getSize().x * widthpct;
         m_PixelRect.outer.height = m_pWindow->getSize().y * heightpct;
+    }
+
+    void UIElement::Center(bool horizontal, bool vertical)
+    {
+        m_bCenteredHorizontal = horizontal;
+        m_bCenteredVertical = vertical;
     }
 } // namespace TGE

@@ -16,6 +16,15 @@ namespace TGE
     protected:
         UIIRect m_PixelRect;
         sf::RenderWindow* m_pWindow;
+        bool m_bCenteredHorizontal = false;
+        bool m_bCenteredVertical = false;
+
+    protected:
+        void Recenter();
+
+    public:
+        bool CenteredHorizontal = false;
+        bool CenteredVertical = false;
 
     public:
         virtual void Init(sf::RenderWindow* window);
@@ -37,5 +46,6 @@ namespace TGE
         void SetUIPixelSize(unsigned int width, unsigned int height);
         void SetUIPctSize(float widthpct, float heightpct);
         inline void SetUIPadding(UI4IVec padding) { m_PixelRect.padding = padding; }
+        void Center(bool horizontal = true, bool vertical = true);
     };
 } // namespace TGE

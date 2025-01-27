@@ -238,6 +238,7 @@ namespace TGE
         }
 
         m_PixelRect.outer.width = addX + m_PixelRect.padding.left + m_PixelRect.padding.right;
+        Recenter();
     }
 
     void UIText::Draw()
