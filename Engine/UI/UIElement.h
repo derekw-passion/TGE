@@ -21,6 +21,8 @@ namespace TGE
         virtual void Init(sf::RenderWindow* window);
         virtual void Update();
         virtual void Draw();
+        virtual void Select() = 0;
+        virtual void Deselect() = 0;
 
     public:
         inline UIIRect GetUIPixelRect() { return m_PixelRect; }

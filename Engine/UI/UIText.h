@@ -33,6 +33,8 @@ namespace TGE
         virtual void Init(sf::RenderWindow* window);
         virtual void Update();
         virtual void Draw();
+        virtual void Select();
+        virtual void Deselect();
         
     public:
         inline void SetBackgroundVisible(bool visible) { m_bBackgroundVisible = visible; }

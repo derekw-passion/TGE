@@ -255,6 +255,16 @@ namespace TGE
         }
     }
 
+    void UIText::Select()
+    {
+        m_bBackgroundVisible = true;
+    }
+
+    void UIText::Deselect()
+    {
+        m_bBackgroundVisible = false;
+    }
+
     void UIText::SetText(string text)
     {
         vector<CommandObject> objs;

@@ -6,7 +6,6 @@
 
 ## UI
 <ul>
-	<li>Select() for any UIElement</lI>
 	<li>TextOption</li>
 	<li>Button</li>
 	<li>Checkbox</li>
