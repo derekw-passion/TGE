@@ -31,7 +31,7 @@ int TestGameEngine::Init()
     bg.setFillColor(sf::Color(0, 255, 0, 100));
     m_Text.SetBackground(bg);
     m_Text.SetBackgroundVisible(false);
-    m_Text.GetUIRect().padding = UI4Vec(10, 10, 10, 10);
+    m_Text.SetUIPadding(UI4IVec(10, 10, 10, 10));
     m_Text.SetDebug(true);
     m_Text.SetText("/c:0:255:0[Hello ] /c:0:0:255[World ] /c:255:255:0/b/i[bold! ] /rbw[Rainbow! ] /rnd[Random!]");
 

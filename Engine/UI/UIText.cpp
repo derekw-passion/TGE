@@ -13,8 +13,8 @@ namespace TGE
 
     void UIText::UpdateBackground()
     {
-        m_Background.setPosition(m_Rect.inner.left, m_Rect.inner.top);
-        m_Background.setSize(sf::Vector2f(m_Rect.inner.width, m_Rect.inner.height));
+        m_Background.setPosition(m_PixelRect.inner.left, m_PixelRect.inner.top);
+        m_Background.setSize(sf::Vector2f(m_PixelRect.inner.width, m_PixelRect.inner.height));
     }
 
     void UIText::ExecuteCommandObject(CommandObject object)
@@ -214,20 +214,20 @@ namespace TGE
 
         for (const auto &text : m_TextElems)
         {
-            if (text.getGlobalBounds().height > m_Rect.inner.height)
+            if (text.getGlobalBounds().height > m_PixelRect.inner.height)
             {
-                m_Rect.inner.height = text.getGlobalBounds().height;
+                m_PixelRect.inner.height = text.getGlobalBounds().height;
             }
         }
 
-        m_Rect.outer.height =
-            m_Rect.inner.height + m_Rect.padding.top + m_Rect.padding.bottom;
+        m_PixelRect.outer.height =
+            m_PixelRect.inner.height + m_PixelRect.padding.top + m_PixelRect.padding.bottom;
 
         float addX = 0;
         for (auto &text : m_TextElems)
         {
             // temporary height fix
-            text.setPosition(m_Rect.inner.left + addX, m_Rect.inner.top - m_Rect.inner.height / 3);
+            text.setPosition(m_PixelRect.inner.left + addX, m_PixelRect.inner.top - (float)m_PixelRect.inner.height / 3);
             addX += text.getGlobalBounds().width;
 
             if (text.getString().getSize() == 1)
@@ -237,7 +237,7 @@ namespace TGE
             }
         }
 
-        m_Rect.outer.width = addX + m_Rect.padding.left + m_Rect.padding.right;
+        m_PixelRect.outer.width = addX + m_PixelRect.padding.left + m_PixelRect.padding.right;
     }
 
     void UIText::Draw()

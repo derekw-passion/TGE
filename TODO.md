@@ -6,13 +6,8 @@
 
 ## UI
 <ul>
-	<li>Grid</li>
-		<ul>
-		<li>columns</li>
-		<li>rows</li>
-		<li>percentage dims</li>
-		<li>margins</li>
-		</ul>
+	<li>Pixel & percentage dims</li>
+	<li>Select() for any UIElement</lI>
 	<li>TextOption</li>
 	<li>Button</li>
 	<li>Checkbox</li>
