@@ -6,6 +6,7 @@
 
 ## UI
 <ul>
+	<li>TextBlock</li>
 	<li>TextOption</li>
 	<li>Button</li>
 	<li>Checkbox</li>
@@ -15,8 +16,8 @@
 ## Advanced
 <ul>
 	<li>Text glow</li>
-	<li>input/mouse support</li>
-	<li>audio</li>
+	<li>kbm support</li>
+	<li>Audio</li>
 	<li>Text wrapping</li>
 	<li>Update dims of all UI elements based on window size</li>
 	<li>UIAnimatedText</li>
