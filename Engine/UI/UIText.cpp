@@ -207,6 +207,33 @@ namespace TGE
         UIElement::Init(window);
     }
 
+    void UIText::SetText(string text)
+    {
+        vector<CommandObject> objs;
+        string newStr = "";
+        CommandParser::ParseMultipleObjects(text, objs);
+        m_TextElems.clear();
+
+        if(objs.empty())
+        {
+            setString(text);
+
+            sf::Text t = sf::Text(*this);
+            t.setFillColor(sf::Color::White);
+            t.setString(text);
+
+            m_TextElems.push_back(t);
+        }
+
+        else
+        {
+            for(size_t i = 0; i < objs.size(); i++)
+            {
+                ExecuteCommandObject(objs[i]);
+            }
+        }
+    }
+
     void UIText::Update()
     {
         UIElement::Update();
@@ -256,6 +283,7 @@ namespace TGE
         }
     }
 
+    // eventually have callbacks for these
     void UIText::Select()
     {
         m_bBackgroundVisible = true;
@@ -264,31 +292,5 @@ namespace TGE
     void UIText::Deselect()
     {
         m_bBackgroundVisible = false;
-    }
-
-    void UIText::SetText(string text)
-    {
-        vector<CommandObject> objs;
-        string newStr = "";
-        CommandParser::ParseMultipleObjects(text, objs);
-
-        if(objs.empty())
-        {
-            setString(text);
-
-            sf::Text t = sf::Text(*this);
-            t.setFillColor(sf::Color::White);
-            t.setString(text);
-
-            m_TextElems.push_back(t);
-        }
-
-        else
-        {
-            for(size_t i = 0; i < objs.size(); i++)
-            {
-                ExecuteCommandObject(objs[i]);
-            }
-        }
     }
 } // namespace TGE

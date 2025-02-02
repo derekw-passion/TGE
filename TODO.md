@@ -1,22 +1,24 @@
 ## General
 <ul>
+	<li>Look up namespace conventions for different folders / modules</li>
 	<li>Comment all engine code so far</li>
 	<li>Start implementing unit tests</li>
 </ul>
 
 ## UI
 <ul>
-	<li>TextBlock</li>
-	<li>TextOption</li>
-	<li>Button</li>
-	<li>Checkbox</li>
-	<li>Dialog</li>
+	<li>Fix UITextBlock</li>
+	<li>Add support for a bunch of UIText commands</li>
+	<li>UITextOption</li>
+	<li>UIButton</li>
+	<li>UICheckbox</li>
+	<li>UIDialog</li>
 </ul>
 
 ## Advanced
 <ul>
 	<li>Text glow</li>
-	<li>kbm support</li>
+	<li>Input support</li>
 	<li>Audio</li>
 	<li>Text wrapping</li>
 	<li>Update dims of all UI elements based on window size</li>

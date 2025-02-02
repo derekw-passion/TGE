@@ -28,9 +28,11 @@ namespace TGE
 
     public:
         UIText();
+        UIText(vector<sf::Text> textElems) : m_TextElems(textElems) {}
 
     public:
         virtual void Init(sf::RenderWindow* window);
+        virtual void SetText(string text);
         virtual void Update();
         virtual void Draw();
         virtual void Select();
@@ -39,6 +41,6 @@ namespace TGE
     public:
         inline void SetBackgroundVisible(bool visible) { m_bBackgroundVisible = visible; }
         inline void SetBackground(sf::RectangleShape background) { m_Background = background; }
-        void SetText(string text);
+        inline vector<sf::Text>& GetRawElements() { return m_TextElems; }
     };
 } // namespace TGE

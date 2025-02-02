@@ -22,7 +22,6 @@ int TestGameEngine::Init()
     
     m_Text.Init(GetWindow());
     m_Text.setFont(*FontManager::GetFont(FONT_ARIAL));
-    m_Text.setFillColor(sf::Color::White);
     m_Text.setCharacterSize(24);
     
     sf::RectangleShape bg;
@@ -35,18 +34,28 @@ int TestGameEngine::Init()
     m_Text.SetDebug(true);
     m_Text.SetText("/c:0:255:0[Hello ] /c:0:0:255[World ] /c:255:255:0/b/i[bold! ] /rbw[Rainbow! ] /rnd[Random!]");
 
+    m_TextBlock.Init(GetWindow());
+    m_TextBlock.setFont(*FontManager::GetFont(FONT_ARIAL));
+    m_TextBlock.setCharacterSize(24);
+    m_TextBlock.SetUIPctPosition(0.2, 0.2);
+    m_TextBlock.SetUIPctSize(0.6, 0);
+    m_TextBlock.SetDebug(true);
+    m_TextBlock.SetText("/c:255:255:255[Hello World! This is a test of the text block. It should wrap around when it reaches the end of the line. Let's see if it works!]");
+
     return 0;
 }
 void TestGameEngine::HandleInput(sf::Event event) {}
 void TestGameEngine::Update()
 {
     m_Text.Update();
+    m_TextBlock.Update();
 }
 void TestGameEngine::Render()
 {
     RenderBegin();
 
     m_Text.Draw();
+    m_TextBlock.Draw();
 
     RenderEnd();
 }
